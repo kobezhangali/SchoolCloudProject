@@ -1,0 +1,18 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+server:
+  port: 8081
+
+spring:
+  application:
+    name: feignconsumer
+
+swagger:
+  basepackage: com.ali.controller
+  title: spring boot swagger fegin
+  descri: this is a spring boot swagger description aaa.
+  version: 1.0
+  contact: zhangxuli
+  url: http://suibianaa/value

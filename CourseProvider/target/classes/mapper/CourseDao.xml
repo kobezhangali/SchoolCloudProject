@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ali.dao.CourseDao">
+
+    <resultMap type="com.ali.entity.Course" id="CourseMap">
+        <result property="courseid" column="courseid" jdbcType="INTEGER"/>
+        <result property="cpid" column="cpid" jdbcType="INTEGER"/>
+        <result property="crid" column="crid" jdbcType="INTEGER"/>
+        <result property="eid" column="eid" jdbcType="INTEGER"/>
+        <result property="couid" column="couid" jdbcType="INTEGER"/>
+        <result property="coursedate" column="coursedate" jdbcType="VARCHAR"/>
+        <result property="hour" column="hour" jdbcType="INTEGER"/>
+        <result property="starts" column="starts" jdbcType="VARCHAR"/>
+        <result property="overs" column="overs" jdbcType="VARCHAR"/>
+        <result property="bak1" column="bak1" jdbcType="VARCHAR"/>
+        <result property="bak2" column="bak2" jdbcType="VARCHAR"/>
+        <result property="bak3" column="bak3" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CourseMap">
+        select
+          courseid, cpid, crid, eid, couid, coursedate, hour, starts, overs, bak1, bak2, bak3
+        from school.course
+        where courseid = #{courseid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CourseMap">
+        select
+          courseid, cpid, crid, eid, couid, coursedate, hour, starts, overs, bak1, bak2, bak3
+        from school.course
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CourseMap">
+        select
+        courseid, cpid, crid, eid, couid, coursedate, hour, starts, overs, bak1, bak2, bak3
+        from school.course
+        <where>
+            <if test="courseid != null">
+                and courseid = #{courseid}
+            </if>
+            <if test="cpid != null">
+                and cpid = #{cpid}
+            </if>
+            <if test="crid != null">
+                and crid = #{crid}
+            </if>
+            <if test="eid != null">
+                and eid = #{eid}
+            </if>
+            <if test="couid != null">
+                and couid = #{couid}
+            </if>
+            <if test="coursedate != null and coursedate != ''">
+                and coursedate = #{coursedate}
+            </if>
+            <if test="hour != null">
+                and hour = #{hour}
+            </if>
+            <if test="starts != null and starts != ''">
+                and starts = #{starts}
+            </if>
+            <if test="overs != null and overs != ''">
+                and overs = #{overs}
+            </if>
+            <if test="bak1 != null and bak1 != ''">
+                and bak1 = #{bak1}
+            </if>
+            <if test="bak2 != null and bak2 != ''">
+                and bak2 = #{bak2}
+            </if>
+            <if test="bak3 != null and bak3 != ''">
+                and bak3 = #{bak3}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="courseid" useGeneratedKeys="true">
+        insert into school.course(cpid, crid, eid, couid, coursedate, hour, starts, overs, bak1, bak2, bak3)
+        values (#{cpid}, #{crid}, #{eid}, #{couid}, #{coursedate}, #{hour}, #{starts}, #{overs}, #{bak1}, #{bak2}, #{bak3})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="courseid" useGeneratedKeys="true">
+        insert into school.course(cpid, crid, eid, couid, coursedate, hour, starts, overs, bak1, bak2, bak3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.cpid}, #{entity.crid}, #{entity.eid}, #{entity.couid}, #{entity.coursedate}, #{entity.hour},
+            #{entity.starts}, #{entity.overs}, #{entity.bak1}, #{entity.bak2}, #{entity.bak3})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="courseid" useGeneratedKeys="true">
+        insert into school.course(cpid, crid, eid, couid, coursedate, hour, starts, overs, bak1, bak2, bak3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.cpid}, #{entity.crid}, #{entity.eid}, #{entity.couid}, #{entity.coursedate}, #{entity.hour},
+            #{entity.starts}, #{entity.overs}, #{entity.bak1}, #{entity.bak2}, #{entity.bak3})
+        </foreach>
+        on duplicate key update
+        cpid = values(cpid) , crid = values(crid) , eid = values(eid) , couid = values(couid) , coursedate =
+        values(coursedate) , hour = values(hour) , starts = values(starts) , overs = values(overs) , bak1 = values(bak1)
+        , bak2 = values(bak2) , bak3 = values(bak3)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.course
+        <set>
+            <if test="cpid != null">
+                cpid = #{cpid},
+            </if>
+            <if test="crid != null">
+                crid = #{crid},
+            </if>
+            <if test="eid != null">
+                eid = #{eid},
+            </if>
+            <if test="couid != null">
+                couid = #{couid},
+            </if>
+            <if test="coursedate != null and coursedate != ''">
+                coursedate = #{coursedate},
+            </if>
+            <if test="hour != null">
+                hour = #{hour},
+            </if>
+            <if test="starts != null and starts != ''">
+                starts = #{starts},
+            </if>
+            <if test="overs != null and overs != ''">
+                overs = #{overs},
+            </if>
+            <if test="bak1 != null and bak1 != ''">
+                bak1 = #{bak1},
+            </if>
+            <if test="bak2 != null and bak2 != ''">
+                bak2 = #{bak2},
+            </if>
+            <if test="bak3 != null and bak3 != ''">
+                bak3 = #{bak3},
+            </if>
+        </set>
+        where courseid = #{courseid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.course where courseid = #{courseid}
+    </delete>
+
+</mapper>

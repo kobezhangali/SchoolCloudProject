@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ali.dao.CourseDao">
+    <select id="getCourseAll" resultType="com.ali.entity.CourseAll">
+ select c.couid,c.couname,c.bak1,co.coursedate,co.hour,co.starts,co.overs,
+ct.ctname,ct.ctdesc,
+cp.cpname,cp.cpdesc,cr.craddr
+ from cou c
+inner join course co  on c.couid=co.couid
+inner join course_profession cp on co.cpid=cp.cpid
+inner join course_type ct on cp.ctid=ct.ctid
+inner join classroom cr on co.crid=cr.crid
+
+</select>
+
+</mapper>

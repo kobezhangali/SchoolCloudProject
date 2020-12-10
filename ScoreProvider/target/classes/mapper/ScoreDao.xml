@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ali.dao.ScoreDao">
+
+    <resultMap type="com.ali.entity.Score" id="ScoreMap">
+        <result property="sid" column="sid" jdbcType="INTEGER"/>
+        <result property="couid" column="couid" jdbcType="INTEGER"/>
+        <result property="scoreid" column="scoreid" jdbcType="INTEGER"/>
+        <result property="coursesscore" column="coursesscore" jdbcType="OTHER"/>
+        <result property="normalscore" column="normalscore" jdbcType="OTHER"/>
+        <result property="total" column="total" jdbcType="OTHER"/>
+        <result property="term" column="term" jdbcType="VARCHAR"/>
+        <result property="scoredesc" column="scoredesc" jdbcType="VARCHAR"/>
+        <result property="bak1" column="bak1" jdbcType="VARCHAR"/>
+        <result property="bak2" column="bak2" jdbcType="VARCHAR"/>
+        <result property="bak3" column="bak3" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ScoreMap">
+        select
+          sid, couid, scoreid, coursesscore, normalscore, total, term, scoredesc, bak1, bak2, bak3
+        from school.score
+        where scoreid = #{scoreid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ScoreMap">
+        select
+          sid, couid, scoreid, coursesscore, normalscore, total, term, scoredesc, bak1, bak2, bak3
+        from school.score
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ScoreMap">
+        select
+        sid, couid, scoreid, coursesscore, normalscore, total, term, scoredesc, bak1, bak2, bak3
+        from school.score
+        <where>
+            <if test="sid != null">
+                and sid = #{sid}
+            </if>
+            <if test="couid != null">
+                and couid = #{couid}
+            </if>
+            <if test="scoreid != null">
+                and scoreid = #{scoreid}
+            </if>
+            <if test="coursesscore != null">
+                and coursesscore = #{coursesscore}
+            </if>
+            <if test="normalscore != null">
+                and normalscore = #{normalscore}
+            </if>
+            <if test="total != null">
+                and total = #{total}
+            </if>
+            <if test="term != null and term != ''">
+                and term = #{term}
+            </if>
+            <if test="scoredesc != null and scoredesc != ''">
+                and scoredesc = #{scoredesc}
+            </if>
+            <if test="bak1 != null and bak1 != ''">
+                and bak1 = #{bak1}
+            </if>
+            <if test="bak2 != null and bak2 != ''">
+                and bak2 = #{bak2}
+            </if>
+            <if test="bak3 != null and bak3 != ''">
+                and bak3 = #{bak3}
+            </if>
+        </where>
+    </select>
+    <insert id="addCourse" keyProperty="scoreid" useGeneratedKeys="true">
+        insert into school.score(sid, couid)
+        values (#{sid}, #{couid})
+    </insert>
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="scoreid" useGeneratedKeys="true">
+        insert into school.score(sid, couid, coursesscore, normalscore, total, term, scoredesc, bak1, bak2, bak3)
+        values (#{sid}, #{couid}, #{coursesscore}, #{normalscore}, #{total}, #{term}, #{scoredesc}, #{bak1}, #{bak2}, #{bak3})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="scoreid" useGeneratedKeys="true">
+        insert into school.score(sid, couid, coursesscore, normalscore, total, term, scoredesc, bak1, bak2, bak3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.sid}, #{entity.couid}, #{entity.coursesscore}, #{entity.normalscore}, #{entity.total},
+            #{entity.term}, #{entity.scoredesc}, #{entity.bak1}, #{entity.bak2}, #{entity.bak3})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="scoreid" useGeneratedKeys="true">
+        insert into school.score(sid, couid, coursesscore, normalscore, total, term, scoredesc, bak1, bak2, bak3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.sid}, #{entity.couid}, #{entity.coursesscore}, #{entity.normalscore}, #{entity.total},
+            #{entity.term}, #{entity.scoredesc}, #{entity.bak1}, #{entity.bak2}, #{entity.bak3})
+        </foreach>
+        on duplicate key update
+        sid = values(sid) , couid = values(couid) , coursesscore = values(coursesscore) , normalscore =
+        values(normalscore) , total = values(total) , term = values(term) , scoredesc = values(scoredesc) , bak1 =
+        values(bak1) , bak2 = values(bak2) , bak3 = values(bak3)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.score
+        <set>
+            <if test="sid != null">
+                sid = #{sid},
+            </if>
+            <if test="couid != null">
+                couid = #{couid},
+            </if>
+            <if test="coursesscore != null">
+                coursesscore = #{coursesscore},
+            </if>
+            <if test="normalscore != null">
+                normalscore = #{normalscore},
+            </if>
+            <if test="total != null">
+                total = #{total},
+            </if>
+            <if test="term != null and term != ''">
+                term = #{term},
+            </if>
+            <if test="scoredesc != null and scoredesc != ''">
+                scoredesc = #{scoredesc},
+            </if>
+            <if test="bak1 != null and bak1 != ''">
+                bak1 = #{bak1},
+            </if>
+            <if test="bak2 != null and bak2 != ''">
+                bak2 = #{bak2},
+            </if>
+            <if test="bak3 != null and bak3 != ''">
+                bak3 = #{bak3},
+            </if>
+        </set>
+        where scoreid = #{scoreid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.score where scoreid = #{scoreid}
+    </delete>
+
+</mapper>

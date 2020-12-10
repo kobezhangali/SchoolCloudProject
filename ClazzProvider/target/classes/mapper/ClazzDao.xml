@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ali.dao.ClazzDao">
+
+    <resultMap type="com.ali.entity.Clazz" id="ClazzMap">
+        <result property="cid" column="cid" jdbcType="INTEGER"/>
+        <result property="gid" column="gid" jdbcType="INTEGER"/>
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="cname" column="cname" jdbcType="VARCHAR"/>
+        <result property="bak1" column="bak1" jdbcType="VARCHAR"/>
+        <result property="bak2" column="bak2" jdbcType="VARCHAR"/>
+        <result property="bak3" column="bak3" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ClazzMap">
+        select
+          cid, gid, pid, cname, bak1, bak2, bak3
+        from school.clazz
+        where cid = #{cid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ClazzMap">
+        select
+          cid, gid, pid, cname, bak1, bak2, bak3
+        from school.clazz
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ClazzMap">
+        select
+        cid, gid, pid, cname, bak1, bak2, bak3
+        from school.clazz
+        <where>
+            <if test="cid != null">
+                and cid = #{cid}
+            </if>
+            <if test="gid != null">
+                and gid = #{gid}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="cname != null and cname != ''">
+                and cname = #{cname}
+            </if>
+            <if test="bak1 != null and bak1 != ''">
+                and bak1 = #{bak1}
+            </if>
+            <if test="bak2 != null and bak2 != ''">
+                and bak2 = #{bak2}
+            </if>
+            <if test="bak3 != null and bak3 != ''">
+                and bak3 = #{bak3}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="cid" useGeneratedKeys="true">
+        insert into school.clazz(gid, pid, cname, bak1, bak2, bak3)
+        values (#{gid}, #{pid}, #{cname}, #{bak1}, #{bak2}, #{bak3})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="cid" useGeneratedKeys="true">
+        insert into school.clazz(gid, pid, cname, bak1, bak2, bak3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.gid}, #{entity.pid}, #{entity.cname}, #{entity.bak1}, #{entity.bak2}, #{entity.bak3})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="cid" useGeneratedKeys="true">
+        insert into school.clazz(gid, pid, cname, bak1, bak2, bak3)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.gid}, #{entity.pid}, #{entity.cname}, #{entity.bak1}, #{entity.bak2}, #{entity.bak3})
+        </foreach>
+        on duplicate key update
+        gid = values(gid) , pid = values(pid) , cname = values(cname) , bak1 = values(bak1) , bak2 = values(bak2) , bak3
+        = values(bak3)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.clazz
+        <set>
+            <if test="gid != null">
+                gid = #{gid},
+            </if>
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+            <if test="cname != null and cname != ''">
+                cname = #{cname},
+            </if>
+            <if test="bak1 != null and bak1 != ''">
+                bak1 = #{bak1},
+            </if>
+            <if test="bak2 != null and bak2 != ''">
+                bak2 = #{bak2},
+            </if>
+            <if test="bak3 != null and bak3 != ''">
+                bak3 = #{bak3},
+            </if>
+        </set>
+        where cid = #{cid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.clazz where cid = #{cid}
+    </delete>
+
+</mapper>

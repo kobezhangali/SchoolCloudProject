@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ali.dao.CourseDao">
+    <select id="getCourseInfo" resultType="com.ali.entity.CourseInfo">
+ select c.couname,c.bak1,c.couid,ct.ctname,ct.ctdesc,
+cp.cpname,cp.cpdesc,cou.coursedate,cou.hour,cou.starts,
+cou.overs,cr.craddr,st.statusname
+ from user u
+inner join student s on u.uid=s.uid
+inner join score sc on s.sid=sc.sid
+inner join cou c on c.couid=sc.couid
+inner join course cou on c.couid=cou.couid
+inner join course_profession cp on cou.cpid=cp.cpid
+inner join course_type ct on cp.ctid=ct.ctid
+inner join classroom cr on cou.crid=cr.crid
+inner join status st on st.statusid=cr.statusid
+where u.uid=#{uid}
+
+</select>
+
+
+    <select id="getCourseByUC" resultType="com.ali.entity.CourseInfo">
+ select c.couname,c.bak1,c.couid,ct.ctname,ct.ctdesc,
+cp.cpname,cp.cpdesc,cou.coursedate,cou.hour,cou.starts,
+cou.overs,cr.craddr,st.statusname
+ from user u
+inner join student s on u.uid=s.uid
+inner join score sc on s.sid=sc.sid
+inner join cou c on c.couid=sc.couid
+inner join course cou on c.couid=cou.couid
+inner join course_profession cp on cou.cpid=cp.cpid
+inner join course_type ct on cp.ctid=ct.ctid
+inner join classroom cr on cou.crid=cr.crid
+inner join status st on st.statusid=cr.statusid
+where u.uid=#{uid} and c.couid=#{couid}
+
+</select>
+
+</mapper>

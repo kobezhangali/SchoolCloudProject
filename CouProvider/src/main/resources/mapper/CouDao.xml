@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ali.dao.CouDao">
+
+    <resultMap type="com.ali.entity.Cou" id="CouMap">
+        <result property="couid" column="couid" jdbcType="INTEGER"/>
+        <result property="couname" column="couname" jdbcType="VARCHAR"/>
+        <result property="bak1" column="bak1" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CouMap">
+        select
+          couid, couname, bak1
+        from school.cou
+        where couid = #{couid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CouMap">
+        select
+          couid, couname, bak1
+        from school.cou
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CouMap">
+        select
+        couid, couname, bak1
+        from school.cou
+        <where>
+            <if test="couid != null">
+                and couid = #{couid}
+            </if>
+            <if test="couname != null and couname != ''">
+                and couname = #{couname}
+            </if>
+            <if test="bak1 != null and bak1 != ''">
+                and bak1 = #{bak1}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="couid" useGeneratedKeys="true">
+        insert into school.cou(couname, bak1)
+        values (#{couname}, #{bak1})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="couid" useGeneratedKeys="true">
+        insert into school.cou(couname, bak1)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.couname}, #{entity.bak1})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="couid" useGeneratedKeys="true">
+        insert into school.cou(couname, bak1)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.couname}, #{entity.bak1})
+        </foreach>
+        on duplicate key update
+        couname = values(couname) , bak1 = values(bak1)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school.cou
+        <set>
+            <if test="couname != null and couname != ''">
+                couname = #{couname},
+            </if>
+            <if test="bak1 != null and bak1 != ''">
+                bak1 = #{bak1},
+            </if>
+        </set>
+        where couid = #{couid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school.cou where couid = #{couid}
+    </delete>
+
+</mapper>

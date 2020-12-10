@@ -1,0 +1,15 @@
+在使用config时:
+1:需要见一个config的子项目,在子项目中加入
+spring-cloud-config-server依赖
+2:在这个config中建立properties夹
+在文件夹中建立三个文件:
+neo-config-dev.properties:在此文件中指定你要引入其他项目的内容
+neo-config-prod.properties
+neo-config-test.properties
+3:设置启动类,在启动类上加@EnableConfigServer注解
+4:在其他需要使用config的子项目中加入
+<dependency>
+     <groupId>org.springframework.cloud</groupId>
+     <artifactId>spring-cloud-starter-config</artifactId>
+ </dependency>
+ 5:在子项目中建bootstrap.yml文件指定你要使用的公共的config服务

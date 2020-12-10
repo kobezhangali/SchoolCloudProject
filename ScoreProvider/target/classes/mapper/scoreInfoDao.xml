@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ali.dao.ScoreDao">
+    <select id="getScoreInfo" resultType="com.ali.entity.ScoreInfo">
+ select sc.coursesscore,sc.normalscore,sc.total,sc.term,c.couname,c.couid,c.bak1
+ from user u
+inner join student s on u.uid=s.uid
+inner join score sc on s.sid=sc.sid
+inner join cou c on c.couid=sc.couid where u.uid=#{uid}
+
+</select>
+    <select id="getScoreAndCou" resultType="com.ali.entity.CouAndSoc">
+ select sc.total,c.couname
+ from user u
+inner join student s on u.uid=s.uid
+inner join score sc on s.sid=sc.sid
+inner join cou c on c.couid=sc.couid where sc.total>0 and u.uid=#{uid}
+
+    </select>
+
+</mapper>

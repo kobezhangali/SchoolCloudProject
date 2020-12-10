@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="EurekaServer" />
+        <module name="Pojo" />
+        <module name="TeacherProvider" />
+        <module name="ConfigClient" />
+        <module name="ScoreProvider" />
+        <module name="FeignConsumer" />
+        <module name="UtilProvider" />
+        <module name="CouProvider" />
+        <module name="CourseProvider" />
+        <module name="Consumer" />
+        <module name="UserProvider" />
+        <module name="Test" />
+        <module name="ClazzProvider" />
+        <module name="StudentProvider" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ExcelProvider" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ClazzProvider" options="-parameters" />
+      <module name="ConfigClient" options="-parameters" />
+      <module name="Consumer" options="-parameters" />
+      <module name="CouProvider" options="-parameters" />
+      <module name="CourseProvider" options="-parameters" />
+      <module name="EurekaServer" options="-parameters" />
+      <module name="ExcelProvider" options="-parameters" />
+      <module name="FeignConsumer" options="-parameters" />
+      <module name="Pojo" options="-parameters" />
+      <module name="SchoolCloudProject" options="-parameters" />
+      <module name="ScoreProvider" options="-parameters" />
+      <module name="StudentProvider" options="-parameters" />
+      <module name="TeacherProvider" options="-parameters" />
+      <module name="Test" options="-parameters" />
+      <module name="UserProvider" options="-parameters" />
+      <module name="UtilProvider" options="-parameters" />
+    </option>
+  </component>
+</project>

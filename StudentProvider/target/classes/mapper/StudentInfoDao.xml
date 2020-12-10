@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ali.dao.StudentDao">
+    <select id="getStudentInfo" resultType="com.ali.entity.StudentInfo">
+ select u.name,u.password,u.uid,u.tel,u.username,s.addr,s.sid,
+s.age,s.highschool,s.IDCard,s.hobby,s.Plitical,s.sdBorn,s.sex
+ from user u
+inner join student s on u.uid=s.uid where u.uid=#{uid}
+
+</select>
+
+</mapper>

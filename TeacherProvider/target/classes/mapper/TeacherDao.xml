@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ali.dao.EmployeeDao">
+    <select id="getAllTeacher" resultType="com.ali.entity.Teacher">
+ select u.username,e.eid,u.name,e.age,e.sex,e.specialty,e.addr,
+e.teacherBron,ed.educationname from user u
+inner join employee e on e.uid=u.uid
+inner join education ed on ed.educationid=e.educationid
+</select>
+
+</mapper>

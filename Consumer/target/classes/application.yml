@@ -1,0 +1,17 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+server:
+  port: 8088
+spring:
+  application:
+    name: consumer
+
+swagger:
+  basepackage: com.ali.controller
+  title: spring boot swagger
+  descri: this is a spring boot swagger description.
+  version: 1.0
+  contact: zhangxuli
+  url: http://suibian/value
